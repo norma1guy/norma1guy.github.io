@@ -1,0 +1,269 @@
+
+* {
+  background-color: black;
+}
+
+body {
+  font-family: "Arial","Helvetica","Verdana", sans-serif;
+  margin: 0 auto;
+  background: black;
+  color: white;
+}
+header {
+  color: white;
+  padding: 20px 20px;
+  text-align: left;
+}
+
+main {
+
+  padding: 20px 20px;
+  
+  
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.intro-about-me {
+  font-size: 40px;
+}
+
+.education {
+  display: flex;
+  flex-direction: column;
+  gap : 10px;
+  
+}
+
+.degree-card {
+  display: flex;
+  flex-direction: column;
+  gap : 0px;
+  border: 2px solid white;
+  border-radius: 16px;
+  padding: 24px;
+  height: 150px;
+}
+
+.degree-info {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.degree-info h3 {
+  flex: 0 1 70%;
+}
+
+.degree-college {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.intro h2 {
+  color: white;
+}
+
+
+.projects {
+  display: flex;
+  flex-direction: column;
+}
+
+.projects h2 {
+  align-content: flex-start;
+}
+/*
+.pokeball {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.pokeball img {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.pokeball .closed {
+    opacity: 1;
+}
+
+.project:hover .closed {
+    opacity: 0;
+}
+
+.project:hover .opening {
+    opacity: 1;
+}
+
+.project:hover .open {
+    opacity: 1;
+    transition-delay: 0.4s;
+}
+.project {
+    position: relative;
+    display: flex;
+}
+
+.project-card {
+    position: absolute;
+
+    top: 100px;
+    left: 0;
+
+    width: 250px;
+
+    background: white;
+    padding: 20px;
+
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s ease;
+    transform: translateY(-10px);
+}
+
+.project:hover .project-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}*/
+
+.project-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.pokeballs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent;
+}
+.icon {
+  width : 35px;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+  border: none;
+  padding: 5px;
+}
+
+.icon.active {
+  content: url("../images/ball-open.png");
+}
+
+.scanner {
+    width: 70px;
+    height: 70px;
+    border: 2px solid #555;
+    border-radius: 20px;
+    background: white;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.scan-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: #00ffcc;
+    box-shadow: 0 0 15px #00ffcc;
+
+    display: none;
+}
+.scanner.scanning .scan-line {
+    display: block;
+    animation: scan 1.5s linear;
+}
+
+
+@keyframes scan {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: 100%;
+    }
+}
+
+.scanner.busy {
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+.project-card{
+  display:flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  padding: 2px;
+}
+
+.project-card.visible {
+  display: flex;
+  align-items: stretch;
+  text-align: center;
+  flex-direction: column;
+  max-width: 300px;
+  opacity: 1;
+  visibility: visible;
+  border : 3px solid white;
+  border-radius: 5px;
+}
+
+.project-card.visible h3{
+  border-bottom: 3px solid white;
+}
+
+.project-card.project-card.visible
+
+
+a:hover{
+  color:deeppink;
+}
+a{
+  color: chartreuse;
+}
+
+footer {
+  padding: 24px;
+  text-align: center;
+  background: #e8edf4;
+  font-size: 0.9rem;
+}
