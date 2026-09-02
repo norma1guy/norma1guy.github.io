@@ -34,7 +34,7 @@ pokeballs.classList.add('pokeballs');
 projects.forEach(project => {
     const icon = document.createElement("img");
     icon.classList.add('icon');
-    icon.src = 'images/ball-closed.png';
+    icon.src = 'assets/images/ball-closed.png';
     icon.draggable = true;
     project.iconElement = icon;
     icon.addEventListener('dragstart', (event) => {

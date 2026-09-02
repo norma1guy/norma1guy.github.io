@@ -4,15 +4,6 @@ const intro = "Hello my name is Anuj Kumar. I am a computer science enthusiast w
 
 const degrees = [
     {
-    degree : "B.Tech in Electronics and Communication Engineering",
-    start : " Aug 2016",
-    end : "Aug 2021",
-    college : "Manipal Institute of Technology",
-    location : "Manipal,India",
-    jist : "",
-    },
-
-    {
     degree : "MS in Software and Data Engineering",
     start : "Sept 2023",
     end : "Feb 2026",
@@ -20,6 +11,14 @@ const degrees = [
     location : "Lugano,Switzerland",
     jist : "",
 
+    },
+    {
+    degree : "B.Tech in Electronics and Communication Engineering",
+    start : " Aug 2016",
+    end : "Aug 2021",
+    college : "Manipal Institute of Technology",
+    location : "Manipal,India",
+    jist : "",
     }
 ]
 
@@ -30,8 +29,7 @@ aboutme.innerHTML = `
     </div>
 `
 
-const education = document.createElement('div');
-education.classList.add('education');
+const education = document.querySelector('.education')
 
 degrees.forEach(degree => {
     const card = document.createElement('div');
