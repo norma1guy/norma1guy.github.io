@@ -1,3 +1,4 @@
+
 * {
   background-color: black;
 }
@@ -92,15 +93,58 @@ main {
   
 }
 
+
+
 .degree-card {
+
+  --dash-length: 12px;
+  --dash-gap: 6px;
+  --dash-height: 2px;
+
   display: flex;
   flex-direction: column;
   gap : 0px;
-  border: 2px solid white;
-  border-radius: 16px;
   padding: 12px;
-  margin:10px;
+  margin:25px;
   height: 150px;
+
+  background: 
+  /* Bottom-Left Horizontal*/
+  repeating-linear-gradient(
+    90deg,
+    crimson 0 var(--dash-length),
+    transparent 0 calc(var(--dash-length) + var(--dash-gap))
+  )
+  0 100% / calc(3 * var(--dash-length) + 2 * var(--dash-gap)) var(--dash-height)
+  no-repeat,
+
+  /* Top-Left Vertical */
+  repeating-linear-gradient(
+    0deg,
+    crimson 0 var(--dash-length),
+    transparent 0 calc(var(--dash-length) + var(--dash-gap))
+  )
+  0 0 / var(--dash-height) calc(3 * var(--dash-length) + 2 * var(--dash-gap))
+  no-repeat,
+
+  /* Top-Right Horizontal */
+  repeating-linear-gradient(
+    90deg,
+    crimson 0 var(--dash-length),
+    transparent 0 calc(var(--dash-length) + var(--dash-gap))
+  )
+  100% 0 / calc(3 * var(--dash-length) + 2 * var(--dash-gap)) var(--dash-height)
+  no-repeat,
+
+  /* Bottom-Right Vertical */
+  repeating-linear-gradient(
+    0deg,
+    crimson 0 var(--dash-length),
+    transparent 0 calc(var(--dash-length) + var(--dash-gap))
+  )
+  100% 100% / var(--dash-height) calc(3 * var(--dash-length) + 2 * var(--dash-gap))
+  no-repeat;
+  
 }
 
 .degree-info {
