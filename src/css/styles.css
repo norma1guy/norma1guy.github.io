@@ -18,11 +18,60 @@ main {
   padding: 20px 20px;
 }
 
+.sidebar{
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+
+}
+.sidebar-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-button{
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 25px;
+  text-decoration: none;
+  display: flex;
+  color: white;
+  border-radius: 15px;
+}
+
+.sidebar-button.active{
+
+  background-color: crimson;
+
+}
+
 .content{
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+  
+}
+
+.content-inner{
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.content-inner.fade-up {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+.content-inner.fade-down {
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .intro {
@@ -50,6 +99,7 @@ main {
   border: 2px solid white;
   border-radius: 16px;
   padding: 12px;
+  margin:10px;
   height: 150px;
 }
 
@@ -84,70 +134,6 @@ main {
 .projects h2 {
   align-content: flex-start;
 }
-/*
-.pokeball {
-    position: relative;
-    width: 100px;
-    height: 100px;
-}
-
-.pokeball img {
-    position: absolute;
-    width: 70%;
-    height: 70%;
-    object-fit: contain;
-
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.pokeball .closed {
-    opacity: 1;
-}
-
-.project:hover .closed {
-    opacity: 0;
-}
-
-.project:hover .opening {
-    opacity: 1;
-}
-
-.project:hover .open {
-    opacity: 1;
-    transition-delay: 0.4s;
-}
-.project {
-    position: relative;
-    display: flex;
-}
-
-.project-card {
-    position: absolute;
-
-    top: 100px;
-    left: 0;
-
-    width: 250px;
-
-    background: white;
-    padding: 20px;
-
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.3s ease;
-    transform: translateY(-10px);
-}
-
-.project:hover .project-card {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}*/
 
 .project-container {
     display: flex;
@@ -247,7 +233,7 @@ main {
   opacity: 1;
   visibility: visible;
   border : 3px solid white;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .project-card.visible h3{

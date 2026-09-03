@@ -48,18 +48,18 @@ const projects = [
     }
 ]
 
-function displayAboutMe(){
-    const aboutme = document.querySelector('.content');
-    aboutme.innerHTML = `
-        <div class="intro-about-me">
-            <p>${intro}</p>
-        </div>
-    `
+function displayAboutMe() {
+    const aboutme = document.createElement("div");
+    aboutme.classList.add("intro-about-me");
+
+    aboutme.innerHTML = `<p>${intro}</p>`;
+
+    return [aboutme];
 }
 function displayEducation(){
 
     const education = document.querySelector('.content')
-
+    let cards = []
     degrees.forEach(degree => {
         const card = document.createElement('div');
         card.classList.add('degree-card');
@@ -77,16 +77,17 @@ function displayEducation(){
             <p>${degree.jist}</p>
         </div>
         `
+        cards.push(card)
 
-        education.appendChild(card);
+        //education.appendChild(card);
 
     })
-
+    return cards;
 }
 
 function displayProjects(){
 
-    const section = document.querySelector('.content');
+    //const section = document.querySelector('.content');
     const container = document.createElement('div');
     container.classList.add('project-container');
 
@@ -216,7 +217,7 @@ function displayProjects(){
     container.appendChild(pokeballs);
     container.appendChild(scanner);
     container.appendChild(projectCard);
-    section.appendChild(container);
+    return [container];
 
 }
 
@@ -224,33 +225,123 @@ function displayProjects(){
 
 
 let activeIndex = -1;
+let automaticScroll = false;
+let sections = { 1 : 'Home', 2 : 'Education', 3 : 'Projects'}
 const displayContent = [displayAboutMe,displayEducation,displayProjects];
 document.querySelector('main').style.height = `${displayContent.length * 100}vh`;
 
+const content = document.querySelector('.content');
+
+// Create container and sidebar
+const contentInner = document.createElement('div');
+contentInner.classList.add('content-inner');
+content.appendChild(contentInner);
+let options = ['Home','Education','Projects'];
+const sidebar = document.querySelector('.sidebar');
+const sidebarContainer = document.createElement('div');
+sidebarContainer.classList.add('sidebar-container');
+sidebar.appendChild(sidebarContainer);
+
+options.forEach((option,index) => {
+    const button = document.createElement('a');
+    button.classList.add('sidebar-button');
+    button.href = '#';
+    button.textContent = option;
+    
+    button.addEventListener('click',(e) =>{
+        e.preventDefault();
+        scrollToSection(index);
+    });
+
+    sidebarContainer.appendChild(button);
+})
+
+
+let lastScrollY = window.scrollY;
+
+function waitForScrollToFinish(index){
+
+    const target = index * window.innerHeight;
+
+    function check(){
+        const distance = Math.abs(window.scrollY - target);
+        if(distance < 2 ){
+            automaticScroll = false;
+            return;
+        }
+
+        requestAnimationFrame(check);
+    }
+    requestAnimationFrame(check);
+}
+
+function scrollToSection(index){
+    const scrollPosition = index * window.innerHeight;
+
+    updateSidebar(index);
+
+    if(index > activeIndex){
+        contentInner.classList.add('fade-up');
+    } else {
+        contentInner.classList.add('fade-down');
+    }
+    setTimeout(() => {
+        contentInner.innerHTML = '';
+        let contentList = displayContent[index]();
+        contentList.forEach((con) => {contentInner.appendChild(con);});
+        contentInner.classList.remove('fade-up','fade-down');
+    },300);
+    activeIndex = index;
+
+
+    automaticScroll = true;
+    window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+    });
+
+    waitForScrollToFinish(index);
+
+}
+
+function updateSidebar(index){
+
+    const buttons = document.querySelectorAll('.sidebar-button');
+    buttons.forEach((button,i) => {
+        button.classList.toggle('active',i === index);
+    })
+}
+
 
 function updateActiveSection() {
-    const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-    const progress =
-        scrollableHeight === 0
-            ? 0
-            : window.scrollY / scrollableHeight;
-
-    const index =
-        Math.min(
-            displayContent.length - 1,
-            Math.floor(progress * displayContent.length)
-        );
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollableHeight === 0 ? 0 : window.scrollY / scrollableHeight;
+    const index = Math.min( displayContent.length - 1,Math.floor(progress * displayContent.length));
+    const scrollingDown = lastScrollY < window.scrollY;
+    lastScrollY = window.scrollY;
 
     if(index == activeIndex){
         return;
     }
 
+    if(automaticScroll){
+        return;
+    }
+
     activeIndex = index;
-    const content = document.querySelector('.content');
-    content.innerHTML = '';
-    displayContent[index]();
+    updateSidebar(index);
+    
+    if(scrollingDown){
+        contentInner.classList.add('fade-up');
+    } else {
+        contentInner.classList.add('fade-down');
+    }
+    setTimeout(() => {
+        contentInner.innerHTML = '';
+        let contentList = displayContent[index]();
+        contentList.forEach((con) => {contentInner.appendChild(con);});
+        contentInner.classList.remove('fade-up','fade-down');
+    },300);
 }
 window.addEventListener('scroll',updateActiveSection);
 updateActiveSection();
