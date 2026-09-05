@@ -6,17 +6,14 @@ const degrees = [
     start : "Sept 2023",
     end : "Feb 2026",
     college : "Università della Svizzera italiana",
-    location : "Lugano,Switzerland",
-    jist : "",
-
+    location : "Lugano, Switzerland",
     },
     {
     degree : "B.Tech in Electronics and Communication Engineering",
     start : " Aug 2016",
     end : "Aug 2021",
     college : "Manipal Institute of Technology",
-    location : "Manipal,India",
-    jist : "",
+    location : "Manipal, India",
     }
 ]
 
@@ -29,12 +26,12 @@ const projects = [
     {
         github : "https://github.com/norma1guy/Multi-source-code-search",
         name : "Code Search with ML",
-        description : "Search engine to query a large code base using FREQ (bag of words count),TF-IDF,LSI and Doc2Vec embeddings."
+        description : "Search engine to query a large code base using different NLP vector embeddings."
     },
     {
         github : "https://github.com/norma1guy/Bug-Prediction",
         name : "Bug Prediction using NLP",
-        description : "Predict the bug proneness of classes using code and NLP (Natural Language Processing) metrics."
+        description : "Predict the bug proneness of classes using code and NLP metrics."
     },
     {
         github : "https://github.com/norma1guy/EmeRLd",
@@ -60,21 +57,21 @@ function displayEducation(){
 
     const education = document.querySelector('.content')
     let cards = []
-    degrees.forEach(degree => {
+    degrees.forEach((degree,index) => {
         const card = document.createElement('div');
         card.classList.add('degree-card');
 
         card.innerHTML = `
         <div class="degree-info">
             <h3>${degree.degree}</h3>
-            <p>${degree.start} - ${degree.end}</p>
+            <p><b>${degree.start} - ${degree.end}</b></p>
+        </div>
+        <div class="logo-container">
+            <img src="assets/images/clg-icon-${index + 1}.svg" class="clg-logo-${index + 1}">
         </div>
         <div class="degree-college">
             <p><b>${degree.college}</b></p>
-            <p>${degree.location}</p>
-        </div>
-        <div class="degree-jist">
-            <p>${degree.jist}</p>
+            <p><b>${degree.location}</b></p>
         </div>
         `
         cards.push(card)
@@ -87,138 +84,55 @@ function displayEducation(){
 
 function displayProjects(){
 
-    //const section = document.querySelector('.content');
-    const container = document.createElement('div');
-    container.classList.add('project-container');
+    const content = document.querySelector('.content')
+    const projectsContainer = document.createElement('div')
+    projectsContainer.classList.add('projects-container');
+    const cards = document.createElement('div');
+    cards.classList.add('project-cards');
 
-    // Create the icons 
-    const pokeballs = document.createElement('div');
-    pokeballs.classList.add('pokeballs');
-    projects.forEach(project => {
-        const icon = document.createElement("img");
-        icon.classList.add('icon');
-        icon.src = 'assets/images/ball-closed.png';
-        icon.draggable = true;
-        project.iconElement = icon;
-        icon.addEventListener('dragstart', (event) => {
-            event.dataTransfer.setData('project',project.name);
-        });
-        pokeballs.appendChild(icon);
+    projects.forEach((project,index) => {
+        const card = document.createElement('div');
+        card.classList.add('project-card');
+
+        //Github Link
+        const gitLink = document.createElement('a');
+        gitLink.href = `${project.github}`;
+        const gitIcon = document.createElement('img');
+        gitIcon.classList.add('github-icon');
+        gitIcon.src = 'assets/images/github-dark.svg'
+        gitLink.appendChild(gitIcon);
+        gitLink.classList.add('github-link');
+
+        //Title
+        const titleContainer = document.createElement('div');
+        titleContainer.classList.add('title-container')
+        const title = document.createElement('h3');
+        title.classList.add('project-name')
+        title.textContent = project.name;
+        titleContainer.appendChild(title);
+
+        //Description
+        const description = document.createElement('div');
+        description.classList.add('project-description');
+        description.textContent = project.description;
+        description.style.fontWeight = 'bold';
+
+        const detailsContainer = document.createElement('div');
+        detailsContainer.classList.add('details-container');
+        detailsContainer.appendChild(description);
+        detailsContainer.appendChild(gitLink);
+        card.appendChild(titleContainer);
+        card.appendChild(detailsContainer);
+        cards.appendChild(card);
     })
 
+    projectsContainer.appendChild(cards);
+    
 
 
-    //Scanner for placing the icons
-    const scanner = document.createElement('div');
-    scanner.classList.add('scanner');
-    const scanLine = document.createElement('div');
-    scanLine.classList.add('scan-line');
-    scanner.appendChild(scanLine);
-    let scannerBusy = false;
-    let activeIcon = null;
-    let activeProject = null;
-
-    // Card that will be used to display information
-    const projectCard = document.createElement('div');
-    projectCard.classList.add('project-card');
 
 
-    function highlightProject(project){
-
-        if(activeIcon){
-            activeIcon.classList.remove('active');
-        }
-        project.iconElement.classList.add('active');
-        activeIcon = project.iconElement;
-    }
-
-    function showProject(project) {
-        const card = document.querySelector('.project-card');
-
-        card.innerHTML = `
-            <h3>${project.name}</h3>
-            <p>${project.description}</p>
-            <a href="${project.github}">Github</a>
-            `;
-        card.classList.add('visible');
-        highlightProject(project);
-    }
-
-    function showScanError() {
-        projectCard.innerHTML = `
-            <h3>Scan Failed</h3>
-            <p>No matching project found.</p>
-        `;
-
-        projectCard.classList.add("visible");
-    }
-
-    function startScan(){
-        scannerBusy = true;
-        scanner.classList.add('scanning');
-        if(activeIcon){
-            activeIcon.classList.remove('active');
-        }
-        projectCard.classList.remove('visible');
-    }
-
-    function finishScan(project){
-        showProject(project);
-        scanner.classList.remove('scanning');
-        projectCard.classList.add('visible');
-        scannerBusy = false;
-        activeProject = project;
-    }
-
-    scanner.addEventListener('dragover', (event) => {
-        event.preventDefault();
-    });
-
-    scanner.addEventListener('drop', (event) =>{
-        event.preventDefault();
-
-        if (scannerBusy) {
-            scanner.classList.add("busy");
-
-            setTimeout(() => {
-                scanner.classList.remove("busy");
-            }, 300);
-
-            return;
-        }
-
-        
-
-        const projectId = event.dataTransfer.getData('project');
-
-        const project = projects.find(
-            p => p.name === projectId
-        );
-
-        if (!project){
-            showScanError();
-            scannerBusy = false;
-            scanner.classList.remove('scanning');
-            return;
-        }
-
-        if(activeProject === project){
-            return;
-        }
-        startScan();
-
-        setTimeout(() => {
-            finishScan(project);
-        },1500);
-    });
-
-    // Add everything to container
-
-    container.appendChild(pokeballs);
-    container.appendChild(scanner);
-    container.appendChild(projectCard);
-    return [container];
-
+    return [projectsContainer];
 }
 
 
