@@ -6,6 +6,7 @@ const degrees = [
     start : "Sept 2023",
     end : "Feb 2026",
     college : "Università della Svizzera italiana",
+    website : "https://www.usi.ch/en",
     location : "Lugano, Switzerland",
     },
     {
@@ -13,6 +14,7 @@ const degrees = [
     start : " Aug 2016",
     end : "Aug 2021",
     college : "Manipal Institute of Technology",
+    website : "https://www.manipal.edu/mit.html",
     location : "Manipal, India",
     }
 ]
@@ -39,9 +41,9 @@ const projects = [
         description : "A Reinforcement Learning agent to play Pokemon Emerald."
     },
     {
-        github : "https://github.com/norma1guy/God-Classes",
-        name : "God Classes",
-        description : "Using clustering algorithms to determine god classes in a code base."
+        github : "https://github.com/JacobSalvi/software-analytics-bug-triaging",
+        name : "Bug Triaging",
+        description : "Fine tuned LLM for automated bug triaging using data scraped from GitHub."
     }
 ]
 
@@ -63,14 +65,14 @@ function displayEducation(){
 
         card.innerHTML = `
         <div class="degree-info">
-            <h3>${degree.degree}</h3>
+            <p class="degree-info-degree"><b>${degree.degree}</b></p>
             <p><b>${degree.start} - ${degree.end}</b></p>
         </div>
         <div class="logo-container">
             <img src="assets/images/clg-icon-${index + 1}.svg" class="clg-logo-${index + 1}">
         </div>
         <div class="degree-college">
-            <p><b>${degree.college}</b></p>
+            <a href="${degree.website}"><b>${degree.college}</b></a>
             <p><b>${degree.location}</b></p>
         </div>
         `
@@ -102,6 +104,9 @@ function displayProjects(){
         gitIcon.src = 'assets/images/github-dark.svg'
         gitLink.appendChild(gitIcon);
         gitLink.classList.add('github-link');
+        const githubContainer = document.createElement('div');
+        githubContainer.appendChild(gitLink);
+        githubContainer.classList.add('github-container');
 
         //Title
         const titleContainer = document.createElement('div');
@@ -117,12 +122,9 @@ function displayProjects(){
         description.textContent = project.description;
         description.style.fontWeight = 'bold';
 
-        const detailsContainer = document.createElement('div');
-        detailsContainer.classList.add('details-container');
-        detailsContainer.appendChild(description);
-        detailsContainer.appendChild(gitLink);
         card.appendChild(titleContainer);
-        card.appendChild(detailsContainer);
+        card.appendChild(description)
+        card.appendChild(githubContainer);
         cards.appendChild(card);
     })
 
