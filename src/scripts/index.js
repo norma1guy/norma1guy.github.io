@@ -129,11 +129,6 @@ function displayProjects(){
     })
 
     projectsContainer.appendChild(cards);
-    
-
-
-
-
     return [projectsContainer];
 }
 
@@ -261,5 +256,4 @@ function updateActiveSection() {
 }
 window.addEventListener('scroll',updateActiveSection);
 updateActiveSection();
-
 
