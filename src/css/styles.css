@@ -191,7 +191,7 @@ header {
   background-color: #161616ee;
   backdrop-filter: blur(10px);
   height : 250px;
-  width: 220px;
+  width: 200px;
   padding: 5px;
   border-radius: 20px;
   transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
@@ -240,7 +240,7 @@ header {
 }
 
 .project-card:not(:last-child) .project-title {
-  transform : rotate(-90deg) translate(-95px,-80px);
+  transform : rotate(-90deg) translate(-95px,-70px);
   transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 }
 
