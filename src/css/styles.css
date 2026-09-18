@@ -211,7 +211,7 @@ header {
   margin: 3px;
 }
 
-.github-container {
+.project-link {
   display: flex;
   justify-content: center;
   padding: 5px;
@@ -233,6 +233,17 @@ header {
   top: 0;
 }
 
+.project-card:last-child .project-title{
+  transform: translateY(100px);
+  transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+
+}
+
+.project-card:not(:last-child) .project-title {
+  transform : rotate(-90deg) translate(-95px,-80px);
+  transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+}
+
 .project-card:not(:first-child){
   margin-left: -150px;
 }
@@ -242,12 +253,18 @@ header {
   transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 }
 
-.project-card:hover .project-description{
+.project-card .project-title.visible {
+  transform: translate(0,0);
+  transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+
+}
+
+.project-description.visible{
   opacity: 1;
   transition: all 0.8s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 }
 
-.project-card:hover .github-container{
+.project-link.visible{
   opacity: 1;
   transition: all 0.8s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 }

@@ -19,33 +19,34 @@ const degrees = [
     }
 ]
 
-const projects = [
-    {
-        github : "https://github.com/norma1guy/Automated-Test-Generation",
-        name : "Automated Test Generator",
-        description : "Automated test generator for python using fuzzing logic and genetic algorithms."
-    },
-    {
-        github : "https://github.com/norma1guy/Multi-source-code-search",
-        name : "Code Search with ML",
-        description : "Search engine to query a large code base using different NLP vector embeddings."
-    },
-    {
-        github : "https://github.com/norma1guy/Bug-Prediction",
-        name : "Bug Prediction using NLP",
-        description : "Predict the bug proneness of classes using code and NLP metrics."
-    },
-    {
-        github : "https://github.com/norma1guy/EmeRLd",
-        name : "EmeRLd",
-        description : "A Reinforcement Learning agent to play Pokemon Emerald."
-    },
-    {
-        github : "https://github.com/JacobSalvi/software-analytics-bug-triaging",
-        name : "Bug Triaging",
-        description : "Fine tuned LLM for automated bug triaging using data scraped from GitHub."
-    }
-]
+const projects = {
+
+    testgen :   {
+                    github : "https://github.com/norma1guy/Automated-Test-Generation",
+                    name : "Automated Test Generator",
+                    description : "Automated test generator for python using fuzzing logic and genetic algorithms."
+                },
+    codesearch :    {
+                        github : "https://github.com/norma1guy/Multi-source-code-search",
+                        name : "Code Search",
+                        description : "Search engine to query a large code base using different NLP vector embeddings."
+                    },
+    bugpredict :    {
+                        github : "https://github.com/norma1guy/Bug-Prediction",
+                        name : "Bug Prediction",
+                        description : "Predict the bug proneness of classes using code and NLP metrics."
+                    },
+    bugtriage :     {
+                        github : "https://github.com/JacobSalvi/software-analytics-bug-triaging",
+                        name : "Bug Triaging",
+                        description : "Fine tuned LLM for automated bug triaging using data scraped from GitHub."
+                    },
+    emerld :    {
+                    github : "https://github.com/norma1guy/EmeRLd",
+                    name : "EmeRLd",
+                    description : "A Reinforcement Learning agent to play Pokemon Emerald."
+                }
+}
 
 function displayAboutMe() {
     const aboutme = document.createElement("div");
@@ -84,6 +85,13 @@ function displayEducation(){
     return cards;
 }
 
+function createTitleElement(text){
+
+    
+
+    return titleContainer;
+}
+
 function displayProjects(){
 
     const content = document.querySelector('.content')
@@ -92,9 +100,24 @@ function displayProjects(){
     const cards = document.createElement('div');
     cards.classList.add('project-cards');
 
-    projects.forEach((project,index) => {
+    Object.entries(projects).forEach(([key,project],index) => {
         const card = document.createElement('div');
         card.classList.add('project-card');
+        card.id = key;
+
+        //Title
+        const titleContainer = document.createElement('div');
+        titleContainer.classList.add('project-title')
+        const title = document.createElement('h3');
+        title.classList.add('project-name')
+        title.textContent =  project.name;
+        titleContainer.appendChild(title);
+        
+        //Description
+        const description = document.createElement('div');
+        description.classList.add('project-description');
+        description.textContent = project.description;
+        description.style.fontWeight = 'bold';
 
         //Github Link
         const gitLink = document.createElement('a');
@@ -106,21 +129,7 @@ function displayProjects(){
         gitLink.classList.add('github-link');
         const githubContainer = document.createElement('div');
         githubContainer.appendChild(gitLink);
-        githubContainer.classList.add('github-container');
-
-        //Title
-        const titleContainer = document.createElement('div');
-        titleContainer.classList.add('title-container')
-        const title = document.createElement('h3');
-        title.classList.add('project-name')
-        title.textContent = project.name;
-        titleContainer.appendChild(title);
-
-        //Description
-        const description = document.createElement('div');
-        description.classList.add('project-description');
-        description.textContent = project.description;
-        description.style.fontWeight = 'bold';
+        githubContainer.classList.add('project-link');
 
         card.appendChild(titleContainer);
         card.appendChild(description)
@@ -256,4 +265,25 @@ function updateActiveSection() {
 }
 window.addEventListener('scroll',updateActiveSection);
 updateActiveSection();
+
+function updateProjectCard(event){
+    const target = event.target;
+    if(target.className === 'project-card'){
+        for(const child of target.children){
+            child.classList.add('visible')
+        }
+    }
+}
+
+function emptyProjectCard(event){
+    const target = event.target;
+    if(target.className === 'project-card'){
+        for(const child of target.children){
+            child.classList.remove('visible'); 
+        }
+    }
+}
+
+contentInner.addEventListener('mouseenter',updateProjectCard,true);
+contentInner.addEventListener('mouseleave',emptyProjectCard,true);
 
